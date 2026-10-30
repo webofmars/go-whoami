@@ -1,0 +1,19 @@
+.container {
+    position: fixed;
+    font-weight: bold;
+    color: darkorange;
+}
+
+.imga {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.in-the-bubble {
+    position: fixed;
+    top: 100px;
+    left: 65px;
+    text-align: center;
+}
