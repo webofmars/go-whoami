@@ -1,11 +1,19 @@
-FROM golang:alpine
+FROM golang:1.23-alpine3.20 AS builder
 
-WORKDIR /go/src/app
-ADD . /go/src/app/
+WORKDIR /app
+COPY go.mod ./
+RUN go mod download
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o app .
 
-CMD ["app"]
+FROM scratch
+
+WORKDIR /app
+COPY --from=builder /app/app ./
+COPY templates ./templates
+COPY html ./html
+
+CMD ["./app"]
 
 EXPOSE 3000
